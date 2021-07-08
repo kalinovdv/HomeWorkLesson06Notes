@@ -37,9 +37,7 @@ public class NotesFragment extends Fragment {
         Note[] notes = new Note[titels.length];
 
         for (int i = 0; i < notes.length; i++) {
-            notes[i].setTitel(titels[i]);
-            notes[i].setText(texts[i]);
-            notes[i].setDate(new Date());
+            notes[i] = new Note(titels[i], texts[i], new Date());
 
             TextView textView = new TextView(getContext());
             textView.setText(notes[i].getTitel());
