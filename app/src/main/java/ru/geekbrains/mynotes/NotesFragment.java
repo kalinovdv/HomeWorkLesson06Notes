@@ -1,9 +1,8 @@
 package ru.geekbrains.mynotes;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class NotesFragment extends Fragment {
@@ -43,8 +41,19 @@ public class NotesFragment extends Fragment {
             textView.setText(notes[i].getTitel());
             textView.setTextSize(30);
             linearLayout.addView(textView);
+            final int j = i;
+            textView.setOnClickListener(v -> {
+                showNote(notes[j]);
+            });
         }
 
+    }
+
+    private void showNote(Note note) {
+        Intent intent = new Intent();
+        intent.setClass(getContext(), TextOfNoteFragment.class);
+        intent.putExtra(TextOfNoteFragment.ARG_NOTE, note);
+        startActivity(intent);
     }
 
 }
