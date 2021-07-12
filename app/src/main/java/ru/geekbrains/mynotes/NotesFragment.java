@@ -58,7 +58,7 @@ public class NotesFragment extends Fragment {
 
     private void showPortretNote(Note note) {
         Intent intent = new Intent();
-        intent.setClass(getContext(), TextOfNoteFragment.class);
+        intent.setClass(getContext(), TextOfNoteActivity.class);
         intent.putExtra(TextOfNoteFragment.ARG_NOTE, note);
         startActivity(intent);
     }
