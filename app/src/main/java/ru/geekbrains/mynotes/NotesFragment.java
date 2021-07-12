@@ -1,11 +1,14 @@
 package ru.geekbrains.mynotes;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +23,7 @@ public class NotesFragment extends Fragment {
 
     public static final String CURRENT_NOTE = "CurrentNote";
     private Note currentNote;
+    private boolean isLandsape;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,22 +42,36 @@ public class NotesFragment extends Fragment {
         String[] titels = getResources().getStringArray(R.array.titels);
         String[] texts = getResources().getStringArray(R.array.texts);
 
-        Note[] notes = new Note[titels.length];
-
-        for (int i = 0; i < notes.length; i++) {
-            notes[i] = new Note(titels[i], texts[i], new Date());
-
+        for (int i = 0; i < titels.length; i++) {
+            String titel = titels[i];
             TextView textView = new TextView(getContext());
-            textView.setText(notes[i].getTitel());
+            textView.setText(titel);
             textView.setTextSize(30);
             linearLayout.addView(textView);
             final int j = i;
             textView.setOnClickListener(v -> {
-                currentNote = notes[j];
-                showPortretNote(currentNote);
+                currentNote = new Note(titel, texts[j], new Date());
+                showTextOfNote(currentNote);
             });
         }
 
+    }
+
+    private void showTextOfNote(Note note) {
+        if (isLandsape) {
+            showLandscapeNote(note);
+        } else {
+            showPortretNote(note);
+        }
+    }
+
+    private void showLandscapeNote(Note note) {
+        TextOfNoteFragment textOfNoteFragment = TextOfNoteFragment.newInstance(note);
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.textOfNote, textOfNoteFragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.commit();
     }
 
     private void showPortretNote(Note note) {
@@ -76,8 +94,13 @@ public class NotesFragment extends Fragment {
         if (savedInstanceState != null) {
             currentNote = savedInstanceState.getParcelable(CURRENT_NOTE);
         } else {
-            currentNote = new Note();
+            currentNote = new Note(getResources().getStringArray(R.array.titels)[0], getResources().getStringArray(R.array.texts)[0], new Date());
         }
 
+        isLandsape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+
+        if (isLandsape) {
+            showLandscapeNote(currentNote);
+        }
     }
 }

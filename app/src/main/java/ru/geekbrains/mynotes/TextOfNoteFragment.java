@@ -18,6 +18,7 @@ public class TextOfNoteFragment extends Fragment {
 
     public static TextOfNoteFragment newInstance(Note note) {
         TextOfNoteFragment fragment = new TextOfNoteFragment();
+
         Bundle args = new Bundle();
         args.putParcelable(ARG_NOTE, note);
         fragment.setArguments(args);
