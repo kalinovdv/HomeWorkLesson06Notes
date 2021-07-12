@@ -10,12 +10,14 @@
     <TextView
         android:id="@+id/titleOfNote"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeTextofNoteFragment"/>
 
     <TextView
         android:id="@+id/textOfNote"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeTextofNoteFragment"/>
 
     <DatePicker
         android:id="@+id/dateOfNote"
