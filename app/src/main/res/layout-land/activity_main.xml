@@ -6,7 +6,7 @@
 
     <fragment
         android:name="ru.geekbrains.mynotes.NotesFragment"
-        android:id="@+id/notes"
+        android:id="@+id/notesLand"
         android:layout_width="@dimen/widthNotesFragmentLand"
         android:layout_height="match_parent"
         android:layout_weight="1"/>
